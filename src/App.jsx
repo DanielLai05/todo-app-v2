@@ -28,7 +28,7 @@ export default function App() {
   const [todos, setTodos] = useLocalStorage('todos', [])
   return (
     <TodoContext.Provider value={{ todos, setTodos }}>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
@@ -38,7 +38,7 @@ export default function App() {
           </Route>
 
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </TodoContext.Provider>
   )
 }
