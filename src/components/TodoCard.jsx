@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Modal } from 'react-bootstrap';
 import { TodoContext } from '../contexts/TodoContext';
 
 export default function TodoCard({ todo }) {
@@ -7,6 +7,7 @@ export default function TodoCard({ todo }) {
   const border = completed ? 'success' : 'danger';
   const [timer, setTimer] = useState(0);
   const [timerInterval, setTimerInterval] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const { setTodos } = useContext(TodoContext);
 
   const startTimer = () => {
@@ -56,11 +57,20 @@ export default function TodoCard({ todo }) {
           <Button variant='secondary' href={`todo/${todo.id}`} className='ms-2'>
             <i className='bi bi-pencil'></i>
           </Button>
-          <Button variant='danger' onClick={deleteTodo} className='ms-2'>
+          <Button variant='danger' onClick={() => setShowModal(true)} className='ms-2'>
             <i class='bi bi-trash3'></i>
           </Button>
         </Card.Body>
       </Card>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>Confirm Delete</Modal.Header>
+        <Modal.Body>Are you sure you want to delete this todo?</Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={() => setShowModal(false)}>Cancel</Button>
+          <Button variant='danger' onClick={deleteTodo}>Delete</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }
